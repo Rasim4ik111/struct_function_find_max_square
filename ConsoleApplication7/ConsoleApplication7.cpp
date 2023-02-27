@@ -1,51 +1,51 @@
 ﻿#include <iostream>
 using namespace std;
-struct duzb {
-	int en;
-	int uz;
+struct squares {
+	int width;
+	int height;
 };
-int sahe(duzb a) {
-	return a.en * a.uz;
+int square(squares a) {
+	return a.width * a.height;
 }
-void daxil_et(duzb& a) {
-	cout << "Duzbucaqlinin en ve uzunlugunu daxil edin: ";
-	cin >> a.en >> a.uz;
+void input_w_h(squares& a) {
+	cout << "Input width and height of square: ";
+	cin >> a.width >> a.height;
 }
-void cap_et(duzb a) {
-	cout << "en = " << a.en << "  " << "uz = " << a.uz << "\t"
-		<< "sahe = " << sahe(a) << "\n";
+void print_w_h(squares a) {
+	cout << "Width = " << a.width << "  " << "Height = " << a.height << "\t"
+		<< "Square = " << square(a) << "\n";
 }
-void daxil_et_mas(duzb d[], int& cnt) {
-	cout << "Obyektlerin sayini daxil et: ";
+void input_arr(squares d[], int& cnt) {
+	cout << "Inpunt count of squares: ";
 	cin >> cnt;
 	int i;
 	for (i = 0; i < cnt; i++) {
-		daxil_et(d[i]);
+		input_w_h(d[i]);
 	}
 	cout << endl;
 }
-void cap_et_mas(duzb d[], int cnt) {
+void print_arr(squares d[], int cnt) {
 	int i;
 	for (i = 0; i < cnt; i++) {
 		cout << i << ") ";
-		cap_et(d[i]);
+		print_w_h(d[i]);
 	}
 	cout << endl;
 }
-void el_sil_indeks(duzb a[], int& cnt, int sil) {
+void rmv_el_index(squares a[], int& cnt, int rmv) {
 	int i, k;
-	if (sil < cnt) {
-		for (i = sil; i < cnt; i++) {
+	if (rmv < cnt) {
+		for (i = rmv; i < cnt; i++) {
 			a[i] = a[i + 1];
 		}
 		cnt--;
 	}
 }
-int get_indeks(duzb a[], int cnt, duzb b) {
+int get_indeks(squares a[], int cnt, squares b) {
 	int i, k;
 	k = 0;
 	for (i = 0; i < cnt; i++) {
-		if (a[i].en == b.en && a[i].uz == b.uz) {
+		if (a[i].width == b.width && a[i].height == b.height) {
 			k = i;
 			return k;
 		}
@@ -53,48 +53,48 @@ int get_indeks(duzb a[], int cnt, duzb b) {
 	return -1;
 }
 
-void el_sil(duzb a[], int& say, duzb b) {
+void rmv_el(squares a[], int& cnt, squares b) {
 	int ind;
 	while (1) {
-		ind = get_indeks(a, say, b);
+		ind = get_indeks(a, cnt, b);
 		if (ind == -1) {
 			break;
 		}
-		el_sil_indeks(a, say, ind);
+		rmv_el_index(a, cnt, ind);
 	}
 }
 
-int get_max_ind(duzb a[], int& say) {
+int get_max_ind(squares a[], int& cnt) {
 	int i, q, max_ind = 0;
 
-	q = sahe(a[0]);
-	for (i = 0; i < say; i++) {
-		if (sahe(a[i]) > q) {
-			q = sahe(a[i]);
+	q = square(a[0]);
+	for (i = 0; i < cnt; i++) {
+		if (square(a[i]) > q) {
+			q = square(a[i]);
 			max_ind = i;
 		}
 	}
 	return max_ind;
 }
 
-void del_max(duzb a[], int& say) {
+void rmv_max(squares a[], int& cnt) {
 	int i, q;
-	q = get_max_ind(a, say);
-	el_sil_indeks(a, say, q);
+	q = get_max_ind(a, cnt);
+	rmv_el_index(a, cnt, q);
 }
 
 int main() {
-	duzb a[100], q, b;
+	squares a[100], q, b;
 	int i, say;
-	daxil_et_mas(a, say);
-	cap_et_mas(a, say);
+	input_arr(a, say);
+	print_arr(a, say);
 	
-	cout << "Sahesi en boyuk olnanin ideksi: " << get_max_ind(a, say);
-	del_max(a, say);
+	cout << "Index of the largest area: " << get_max_ind(a, say);
+	rmv_max(a, say);
 	
 
 	cout << "\n\n";
-	cap_et_mas(a, say);
+	print_arr(a, say);
 }
 
 
